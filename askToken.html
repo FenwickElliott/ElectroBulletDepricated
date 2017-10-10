@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>ElectroBullet</title>
+        <link rel="stylesheet" type="text/css" href="master.css">
+    </head>
+    <body>
+        <nav>
+            <a href="/"><img src="./assets/logo@2x.png" width="280px" height="58px"/></a>
+            <a href="/"><img id="user_icon" src="./assets/generic_avitar.png"/></a>
+        </nav>
+
+        <h1> What's your token?</h1>
+        <p>I'm terribly sorry but the behind the sceens PushBullet account authorization isn't currently working, you need to (create and) get your api key form the setting page of your PushBullet account and submit it bellow</p>
+        <p>You will only have to do this once:</p>
+        <form>
+            <input id="token" type="text" />
+            <input id="submit" type="submit" onclick="initialize(document.getElementById('token').value);" />
+        </form>
+
+        <!-- <script src="askToken.js"></script> -->
+        <script src="./dry.js"></script>
+    </body>
+</html>
