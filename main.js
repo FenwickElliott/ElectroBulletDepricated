@@ -8,7 +8,7 @@ function createWindow () {
   win = new BrowserWindow({width: 800, height: 600})
 
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'askToken.html'),
+    pathname: path.join(__dirname, 'initialize.html'),
     protocol: 'file:',
     slashes: true
   }))
@@ -21,9 +21,9 @@ function createWindow () {
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+  // if (process.platform !== 'darwin') {
     app.quit()
-  }
+  // }
 })
 
 app.on('activate', () => {

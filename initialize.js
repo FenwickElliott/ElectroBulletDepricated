@@ -1,6 +1,5 @@
 const https = require("https");
-const fs = require('fs');
-// const data = require('./data');
+const fs = require("fs");
 
 let options = {
     hostname: 'api.pushbullet.com',
@@ -8,7 +7,6 @@ let options = {
 }
 
 function get(path, target){
-    // data[path] = target
     console.log('getting')
     options['path'] = path;
     let temp = ''
@@ -18,26 +16,24 @@ function get(path, target){
             temp += d;
         });
         res.on('end', function(){
-            console.log('here');
+            console.log('writing');
             fs.writeFile(`./db/${target}.json`, temp, (err) => {
                 if (err) throw err;
             })
-            data[target] = temp;
-        return temp;
         });
         res.on('error', (e) => {
             console.log(e);
         });
     });
-    return temp;
+
     req.end();
 }
 
 function initialize(key){
-    // data['apiKey'] = key;
+    // alert(key)
     options['headers'] = {"Access-Token": key}
     get('/v2/users/me', 'user_info');
     // get('/v2/devices', 'devices');
 }
 
-initialize("o.6548Yicw3tRNDI5CKfax6F2JSSck5HY6")
+// initialize("o.6548Yicw3tRNDI5CKfax6F2JSSck5HY6")
