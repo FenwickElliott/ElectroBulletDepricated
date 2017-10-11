@@ -5,5 +5,12 @@
   "devDependencies": {
     "electron": "^1.7.8",
     "electron-packager": "^9.1.0"
+  },
+  "dependencies": {
+    "jsonfile": "^4.0.0",
+    "node-fetch": "^1.7.3"
+  },
+  "scripts": {
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds"
   }
 }

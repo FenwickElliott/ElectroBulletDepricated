@@ -33,7 +33,7 @@ function initialize(key){
     // alert(key)
     options['headers'] = {"Access-Token": key}
     get('/v2/users/me', 'user_info');
-    // get('/v2/devices', 'devices');
+    get('/v2/devices', 'devices');
 }
 
-// initialize("o.6548Yicw3tRNDI5CKfax6F2JSSck5HY6")
+initialize("o.6548Yicw3tRNDI5CKfax6F2JSSck5HY6")
