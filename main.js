@@ -12,7 +12,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }))
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
   win.on('closed', () => {
     win = null
   })
@@ -21,9 +21,9 @@ function createWindow () {
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
-  // if (process.platform !== 'darwin') {
+  if (process.platform !== 'darwin') {
     app.quit()
-  // }
+  }
 })
 
 app.on('activate', () => {
