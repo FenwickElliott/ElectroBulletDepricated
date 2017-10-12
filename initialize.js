@@ -1,5 +1,6 @@
 const https = require("https");
 const fs = require("fs");
+const path = require('path')
 
 let options = {
     hostname: 'api.pushbullet.com',
@@ -19,7 +20,9 @@ function get(path, target){
         });
         res.on('end', function(){
             console.log('writing');
-            fs.writeFile(`./db/${target}.json`, temp, (err) => {
+            console.log(path.join(__dirname, `/db/${target}.json`))
+            // fs.writeFile(`./db/${target}.json`, temp, (err) => {
+                fs.writeFile( path.join(__dirname, `/db/${target}.json`), temp, (err) => {
                 if (err) throw err;
             })
         });

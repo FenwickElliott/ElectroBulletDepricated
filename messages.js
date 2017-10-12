@@ -1,6 +1,6 @@
 const jsonfile = require('jsonfile');
 const fetch = require('node-fetch');
-
+const path = require('path')
 const Secrets = require('./secrets');
 
 let currentThread;
@@ -17,10 +17,10 @@ function getMagazine(){
         // currentThread = res.threads[0];
         m = res.threads;
         postMagazine(res);
-        jsonfile.writeFile('./db/magazine.json', res, err => console.log(err));
+        jsonfile.writeFile(path.join(__dirname, '/db/magazine.json'), res, err => console.log(err));
         // load threads
         res.threads.forEach(function(threadM){
-            jsonfile.readFile(`./db/threads/thread${threadM['id']}.json`, (err, threadI) =>{
+            jsonfile.readFile(path.join(__dirname, `/db/threads/thread${threadM['id']}.json`), (err, threadI) =>{
                 if (err){
                     getThread(threadM['id'])
                 }
@@ -32,7 +32,7 @@ function getMagazine(){
     })
     .catch(function(err){
         // load magazine from disk if it's there
-        jsonfile.readFile("./db/magazine.json", (err, mag) => {
+        jsonfile.readFile(path.join(__dirname, "/db/magazine.json"), (err, mag) => {
             if (err){
                 alert("I'm sorry but I can't connect to your PushBullet account, there's not much I can do about that so I'm going back to bed.");
                 // figure out how to close window
@@ -68,7 +68,7 @@ function postMagazine(mag){
 
 function loadThread(id){
     currentThread = m.find(x => x.id == id);
-    jsonfile.readFile(`./db/threads/thread${id}.json`, (err, thread) =>{
+    jsonfile.readFile(path.join(__dirname, `/db/threads/thread${id}.json`), (err, thread) =>{
         if (err || currentThread.latest.timestamp != thread.thread[0].timestamp){
             getThread(id);
         }
@@ -83,7 +83,8 @@ function getThread(id){
     .then(res => res.json())
     .then(function(json){
         // postThread(json)
-        jsonfile.writeFile(`./db/threads/thread${id}.json`, json, err => console.log(err));
+        // console.log("writing thread " + id)
+        jsonfile.writeFile(path.join(__dirname, `/db/threads/thread${id}.json`), json, err => console.log(err));
     })
 }
 
