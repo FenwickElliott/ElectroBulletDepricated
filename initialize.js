@@ -9,10 +9,12 @@ let options = {
 function get(path, target){
     console.log('getting')
     options['path'] = path;
+    // console.dir(JSON.stringify(options))
     let temp = ''
     let req = https.request(options, (res) => {
         console.log('reqesting')
         res.on('data', (d) => {
+            console.log('receiving data')
             temp += d;
         });
         res.on('end', function(){
@@ -21,22 +23,16 @@ function get(path, target){
                 if (err) throw err;
             })
         });
-        res.on('error', (e) => {
+        res.on('error', function(e){
             console.log(e);
         });
     });
-
     req.end();
 }
 
 function initialize(key){
     // alert(key)
     options['headers'] = {"Access-Token": key}
-    console.dir(options)
     get('/v2/users/me', 'user_info');
     get('/v2/devices', 'devices');
-}
-
-function init(){
-    initialize("o.6548Yicw3tRNDI5CKfax6F2JSSck5HY6")
 }
