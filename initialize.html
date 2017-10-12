@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>ElectroBullet</title>
-        <link rel="stylesheet" type="text/css" href="master.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
         <nav>
@@ -14,10 +14,10 @@
         <h1> What's your token?</h1>
         <p>I'm terribly sorry but the behind the sceens PushBullet account authorization isn't currently working, you need to (create and) get your api key form the setting page of your PushBullet account and submit it bellow</p>
         <p>You will only have to do this once:</p>
-        <form>
-            <input id="token" type="text" />
-            <input id="submit" type="submit" onclick="initialize(document.getElementById('token').value);" />
-        </form>
+        <!-- <form action="#"> -->
+            <input id="token" type="text" onkeydown="if(event.keyCode == 13) initialize(document.getElementById('token').value)"/>
+            <input id="submit" type="button" value="submit" onclick="initialize(document.getElementById('token').value);" />
+        <!-- </form> -->
 
         <script src="initialize.js"></script>
     </body>
