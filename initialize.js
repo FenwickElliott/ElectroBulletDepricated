@@ -32,8 +32,11 @@ function get(path, target){
 function initialize(key){
     // alert(key)
     options['headers'] = {"Access-Token": key}
+    console.dir(options)
     get('/v2/users/me', 'user_info');
     get('/v2/devices', 'devices');
 }
 
-initialize("o.6548Yicw3tRNDI5CKfax6F2JSSck5HY6")
+function init(){
+    initialize("o.6548Yicw3tRNDI5CKfax6F2JSSck5HY6")
+}

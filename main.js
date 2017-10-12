@@ -1,14 +1,22 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
+const fs = require('fs');
 
 let win
+let page
 
 function createWindow () {
   win = new BrowserWindow({width: 800, height: 600})
 
+  if (fs.existsSync('./db/user_info.json')){
+    page = "messages.html"
+} else {
+    page = "initialize.html"
+}
+
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'messages.html'),
+    pathname: path.join(__dirname, page),
     protocol: 'file:',
     slashes: true
   }))
