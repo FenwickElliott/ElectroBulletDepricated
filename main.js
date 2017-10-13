@@ -6,10 +6,12 @@ const fs = require('fs');
 let win
 let page
 
+global.eBox = {}
+
 function createWindow () {
   win = new BrowserWindow({width: 800, height: 600})
 
-  if (fs.existsSync('./db/user_info.json')){
+  if (fs.existsSync(path.join(__dirname, '/db/user_info.json'))){
       page = "messages.html"
   } else {
       page = "initialize.html"
@@ -20,7 +22,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }))
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
   win.on('closed', () => {
     win = null
   })

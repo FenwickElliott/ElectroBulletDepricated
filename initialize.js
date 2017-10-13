@@ -1,11 +1,14 @@
 const https = require("https");
 const fs = require("fs");
-const path = require('path')
+const path = require('path');
+const secrets = require('./secrets')
 
-let options = {
-    hostname: 'api.pushbullet.com',
-    method: 'GET'
-}
+// let options = {
+//     hostname: 'api.pushbullet.com',
+//     method: 'GET'
+// }
+
+console.log(__dirname)
 
 function get(path, target){
     console.log('getting')
@@ -32,6 +35,51 @@ function get(path, target){
     });
     req.end();
 }
+
+
+function init(key){
+    box = {
+        apiKey: key
+    }
+    let options = {
+        hostname: 'api.pushbullet.com',
+        method: 'GET',
+        path: '/v2/users/me',
+        headers: {"Access-Token": key}
+    }
+    let me = ''
+    let req = https.request(options, (res) =>{
+        res.on('data', (data) => {
+            me += data
+        })
+        res.on('end', () => {
+            box.iden = JSON.parse(me).iden
+        })
+        res.on('error', (e) => {throw e})
+    })
+    req.end();
+    options.path = '/v2/devices'
+    let devices = ''
+    let reqq = https.request(options, (res) =>{
+        res.on('data', (data) => {
+            devices += data
+        })
+        res.on('end', () =>{
+            fs.writeFile('./db/devices.json', devices)
+            devices = JSON.parse(devices)
+            devices.devices.forEach(function(e){
+                if (e.has_sms) {
+                    box.deviceIden = e.iden
+                }
+            })
+        })
+    })
+    reqq.end();
+    fs.writeFile(path.join(__dirname, '/db/keys.json'), JSON.stringify(box),(err) =>{
+        throw err
+    })
+}
+
 
 function initialize(key){
     // alert(key)
