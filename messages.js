@@ -1,7 +1,7 @@
 const jsonfile = require('jsonfile');
 const fetch = require('node-fetch');
 const path = require('path')
-const Secrets = require('./secrets');
+const keys = JSON.parse(require('electron').remote.getGlobal('keys').toString())
 
 let currentThread;
 let m;
@@ -9,8 +9,8 @@ let m;
 getMagazine();
 
 function getMagazine(){
-    fetch(`https://api.pushbullet.com/v2/permanents/${Secrets.deviceIden}_threads`, {
-        headers: {"Access-Token": Secrets.apiKey}
+    fetch(`https://api.pushbullet.com/v2/permanents/${keys.deviceIden}_threads`, {
+        headers: {"Access-Token": keys.apiKey}
     })
     .then(res => res.json())
     .then(function(res){
@@ -77,8 +77,8 @@ function loadThread(id){
 }
 
 function getThread(id){
-    fetch(`https://api.pushbullet.com/v2/permanents/${Secrets.deviceIden}_thread_${id}`, {
-        headers: {"Access-Token": Secrets.apiKey}
+    fetch(`https://api.pushbullet.com/v2/permanents/${keys.deviceIden}_thread_${id}`, {
+        headers: {"Access-Token": keys.apiKey}
     })
     .then(res => res.json())
     .then(function(json){
@@ -97,7 +97,7 @@ function postThread(thread){
     bulk.scrollTop = bulk.scrollHeight;
 }
 
-const websocket = new WebSocket('wss://stream.pushbullet.com/websocket/' + Secrets.apiKey);
+const websocket = new WebSocket('wss://stream.pushbullet.com/websocket/' + keys.apiKey);
 
 websocket.onmessage = function(e){
     // console.dir(e.data);
@@ -118,8 +118,8 @@ function send(body){
                 conversation_iden: currentThread.recipients[0].address,
                 message: body,
                 package_name: "com.pushbullet.android",
-                source_user_iden: Secrets.iden,
-                target_device_iden: Secrets.deviceIden,
+                source_user_iden: keys.iden,
+                target_device_iden: keys.deviceIden,
                 type: "messaging_extension_reply"
             },
         type: "push"
@@ -128,7 +128,7 @@ function send(body){
     fetch("https://api.pushbullet.com/v2/ephemerals", {
         method: 'POST',
         headers: 'Content-Type: application/json',
-        headers: {"Access-Token": Secrets.apiKey},
+        headers: {"Access-Token": keys.apiKey},
         body: packet
     })
     .then(res => res.json())

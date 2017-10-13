@@ -4,17 +4,17 @@ const url = require('url')
 const fs = require('fs');
 
 let win
-let page
-
-global.eBox = {}
 
 function createWindow () {
   win = new BrowserWindow({width: 800, height: 600})
+  let page
 
-  if (fs.existsSync(path.join(__dirname, '/db/user_info.json'))){
-      page = "messages.html"
-  } else {
-      page = "initialize.html"
+  try {
+    let keys = fs.readFileSync(path.join(__dirname, '/db/keys.json'))
+    global.keys = keys
+    page = 'messages.html'
+  } catch (e) {
+    page = 'initialize.html'
   }
 
   win.loadURL(url.format({
