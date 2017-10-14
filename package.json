@@ -11,6 +11,7 @@
     "node-fetch": "^1.7.3"
   },
   "scripts": {
-    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds"
+    "scrub": "rm -rf db && mkdir -p db/threads",
+    "package-mac": "rm -rf db && mkdir -p db/threads && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds"
   }
 }
