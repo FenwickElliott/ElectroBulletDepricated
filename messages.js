@@ -88,9 +88,18 @@ function postThread(thread){
     bulk.scrollTop = bulk.scrollHeight;
 }
 
+let sendOptions = {
+    hostname: 'api.pushbullet.com',
+    path: '/v2/ephemerals',
+    method: 'POST',
+    headers: {
+        'Access-Token': keys.apiKey,
+        'Content-Type': 'application/json'
+    }
+};
 
-function send(body){
-    packet = JSON.stringify({
+function send(body) {
+    let payload = JSON.stringify({
         push: {
                 conversation_iden: currentThread.recipients[0].address,
                 message: body,
@@ -101,15 +110,17 @@ function send(body){
             },
         type: "push"
     })
+    let req = https.request(sendOptions, (res) => {
+        alert(res.statusCode)
+        res.on('data', (d) =>{
+            process.stdout.write(d)
+        })
+    })
+    req.on('error', (e) =>{
+        console.log(e)
+    })
+    req.write(payload);
 
-    console.log(packet)
-
-//     fetch("https://api.pushbullet.com/v2/ephemerals", {
-//         method: 'POST',
-//         headers: 'Content-Type: application/json',
-//         headers: {"Access-Token": keys.apiKey},
-//         body: packet
-//     })
-//     .then(res => res.json())
-//     .catch(err => alert(err));
+    req.end();
+    return false
 }
