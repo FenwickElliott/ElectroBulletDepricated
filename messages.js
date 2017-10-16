@@ -21,17 +21,41 @@ function getMagazine(){
         path: `/v2/permanents/${keys.deviceIden}_threads`,
         headers: {"Access-Token": keys.apiKey}
     }
-    mag = ''
+    let m = ''
     let req = https.get(options, (res) => {
         res.on('data', (d) => {
-            mag += d;
+            m += d;
         })
         res.on('end', () => {
-            fs.writeFile(path.join(__dirname, '/db/magazine.json'), JSON.stringify(mag))
+            mag = JSON.parse(m)
+            postMagazine(mag)
+            fs.writeFile(path.join(__dirname, '/db/magazine.json'), m)
         })
     req.on('error', (e)=> {
         console.log(e)
     })
     req.end();
     })
+}
+
+function postMagazine(mag){
+    // look into forEach with index
+    magazine.innerHTML = '';
+    for (let i = 0; i < mag.threads.length; i++){
+        let shade;
+        if ( i % 2 == 0){
+            shade = 'light';
+        } else {
+            shade = 'dark';
+        }
+        magazine.innerHTML += `
+            <div class="${shade}" id="conversation${i}" onclick="loadThread(${mag.threads[i].id})">
+                <h2> ${mag.threads[i].recipients[0].name} </h2>
+                <p> ${mag.threads[i].latest.body} </p>
+            </div>
+        `
+    }
+    // if (bulk.innerHTML == ''){
+    //     loadThread(mag.threads[0].id);
+    // }
 }
