@@ -87,3 +87,29 @@ function postThread(thread){
     })
     bulk.scrollTop = bulk.scrollHeight;
 }
+
+
+function send(body){
+    packet = JSON.stringify({
+        push: {
+                conversation_iden: currentThread.recipients[0].address,
+                message: body,
+                package_name: "com.pushbullet.android",
+                source_user_iden: keys.iden,
+                target_device_iden: keys.deviceIden,
+                type: "messaging_extension_reply"
+            },
+        type: "push"
+    })
+
+    console.log(packet)
+
+//     fetch("https://api.pushbullet.com/v2/ephemerals", {
+//         method: 'POST',
+//         headers: 'Content-Type: application/json',
+//         headers: {"Access-Token": keys.apiKey},
+//         body: packet
+//     })
+//     .then(res => res.json())
+//     .catch(err => alert(err));
+}
