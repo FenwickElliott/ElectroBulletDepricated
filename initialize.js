@@ -1,6 +1,7 @@
 const https = require("https");
 const fs = require("fs");
 const path = require('path');
+const app = require('electron').remote.app
 
 function init(key){
     box = {
@@ -41,7 +42,9 @@ function init(key){
     reqq.end();
     setTimeout(function(){
         fs.writeFile(path.join(__dirname, '/db/keys.json'), JSON.stringify(box),(err) =>{
-            throw err
+            if (err) throw err
+            app.relaunch();
+            app.exit();
         })
     }, 2000)
 }
