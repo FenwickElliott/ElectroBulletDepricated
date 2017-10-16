@@ -124,3 +124,17 @@ function send(body) {
     req.end();
     return false
 }
+
+const websocket = new WebSocket('wss://stream.pushbullet.com/websocket/' + keys.apiKey);
+websocket.onmessage = function(e){
+    // console.dir(e.data);
+    let data = JSON.parse(e.data);
+    if (data.push && data.push.notifications) {
+        getMagazine();
+        data.push.notifications.forEach(function(n){
+            new Notification(data.push.notifications[0].title, {
+                body: data.push.notifications[0].body
+            })
+        })
+    }
+}
