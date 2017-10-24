@@ -26,14 +26,14 @@ function createWindow () {
 
   fs.readFile(path.join(__dirname, '/db/bounds.json'), 'utf8', (err, res) =>{
     if (!err){
-      bounds = res
+      bounds = JSON.parse(res)
     }
     publishCheckList.done();
   })
 
   fs.readFile(path.join(__dirname, '/db/keys.json'), (err, res) =>{
     if (err){
-      page = 'initalize'
+      page = 'initialize'
     } else {
       global.keys = res
       page = 'messages'
@@ -72,10 +72,9 @@ function createWindow () {
 
   function publish(){
     console.log(typeof bounds)
-    win = new BrowserWindow(JSON.parse(bounds))
+    win = new BrowserWindow(bounds)
     win.loadURL(`file://${__dirname}/${page}.html`)
-    
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
     win.on('closed', () => {
       win = null
     })
