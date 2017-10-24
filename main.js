@@ -41,35 +41,6 @@ function createWindow () {
     publishCheckList.done();
   })
 
-  // fs.readFile(path.join(__dirname, '/db/bounds.json'), 'utf8', (err, data) => {
-  //   if (err){
-  //     bounds = {width: 1800, height: 600}
-  //     fs.writeFile(path.join(__dirname, '/db/bounds.json'), JSON.stringify(bounds))
-  //   } else {
-  //     console.log('reading')
-  //     console.log(data)
-  //     bounds = data;
-  //   }
-  // })
-  
-  // console.log(bounds)
-  // win = new BrowserWindow(bounds)
-  // let page
-
-  // try {
-  //   let keys = fs.readFileSync(path.join(__dirname, '/db/keys.json'))
-  //   global.keys = keys
-  //   page = 'messages.html'
-  // } catch (e) {
-  //   page = 'initialize.html'
-  // }
-
-  // win.loadURL(url.format({
-  //   pathname: path.join(__dirname, page),
-  //   protocol: 'file:',
-  //   slashes: true
-  // }))
-
   function publish(){
     console.log(typeof bounds)
     win = new BrowserWindow(bounds)
