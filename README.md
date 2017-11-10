@@ -2,7 +2,7 @@
 
 ElectroBullet is a desktop client for PushBullet, which allows users to send and recive text messages from their desktop.
 
-A packaged version for mac can be found [here](http://aws-website-fenwickelliott-9evp8.s3-website-us-east-1.amazonaws.com/Assets/Software/ElectroBullet.zip).
+A packaged version for mac can be found [here](https://fenwickelliott.io/Assets/Software/ElectroBullet.zip).
 
 ## To compile yourself
 * Clone this reop: `git clone https://github.com/FenwickElliott/ElectroBullet.git`
